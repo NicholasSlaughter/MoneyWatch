@@ -9,6 +9,6 @@ namespace MoneyWatch.API.Utilities
 {
     public static class DtoExtensions
     {
-        public static ApplicationUserDto AsDto(this ApplicationUser user) => new ApplicationUserDto(user.First_Name, user.Last_Name, user.Expenses, user.Alerts);
+        public static ApplicationUserDto AsDto(this ApplicationUser user) => new ApplicationUserDto(user.Id,user.First_Name, user.Last_Name, user.UserName,user.Email, user.Expenses, user.Alerts);
     }
 }

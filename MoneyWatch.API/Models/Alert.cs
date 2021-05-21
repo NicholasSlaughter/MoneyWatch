@@ -28,5 +28,8 @@ namespace MoneyWatch.API.Models
         [Display(Name ="Period")]
         public string PeriodId { get; set; }
         public Period Period { get; set; }
+        [Display(Name ="Category")]
+        public string CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }
