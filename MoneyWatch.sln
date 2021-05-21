@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyWatch.API", "MoneyWatch.API\MoneyWatch.API.csproj", "{0D4DECA4-2887-4CAF-9578-5B427AFF2F9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyWatch.Tests", "MoneyWatch.Tests\MoneyWatch.Tests.csproj", "{30DA8F5E-8EF4-403A-B1E0-8817E053243B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D4DECA4-2887-4CAF-9578-5B427AFF2F9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D4DECA4-2887-4CAF-9578-5B427AFF2F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D4DECA4-2887-4CAF-9578-5B427AFF2F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D4DECA4-2887-4CAF-9578-5B427AFF2F9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30DA8F5E-8EF4-403A-B1E0-8817E053243B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30DA8F5E-8EF4-403A-B1E0-8817E053243B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30DA8F5E-8EF4-403A-B1E0-8817E053243B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30DA8F5E-8EF4-403A-B1E0-8817E053243B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {81B16576-2DA2-460A-9119-87BE76C9C5B0}
+	EndGlobalSection
+EndGlobal
