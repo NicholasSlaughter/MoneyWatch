@@ -59,5 +59,37 @@ namespace MoneyWatch.API.Controllers
             await _applicationUsersRepository.CreateApplicationUserAsync(newUser, userPassword);
             return CreatedAtAction(nameof(CreateApplicationUserAsync), new { id = newUser.Id }, newUser.AsDto());
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateApplicationUserAsync(string id, UpdateApplicationUserDto userDto)
+        {
+            var existingUser = await _applicationUsersRepository.GetApplicationUserAsync(id);
+
+            if(existingUser is null)
+                return NotFound();
+
+            ApplicationUser updatedUser = existingUser;
+            updatedUser.First_Name = userDto.First_Name;
+            updatedUser.Last_Name = userDto.Last_Name;
+            updatedUser.Email = userDto.Email;
+            updatedUser.UserName = userDto.UserName;
+
+            await _applicationUsersRepository.UpdateApplicationUserAsync(updatedUser);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteApplicationUserAsync(string id)
+        {
+            var existingUser = await _applicationUsersRepository.GetApplicationUserAsync(id);
+
+            if(existingUser is null)
+                return NotFound();
+
+            await _applicationUsersRepository.DeleteApplicationUserAsync(existingUser.Id);
+
+            return NoContent();
+        }
     }
 }

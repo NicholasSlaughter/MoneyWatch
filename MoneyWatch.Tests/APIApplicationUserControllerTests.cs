@@ -146,6 +146,128 @@ namespace MoneyWatch.Tests
             }
         }
 
+        [Fact]
+        public async Task UpdateApplicationUserAsync_WithExistingApplicationUser_ReturnsNoContent()
+        {
+            try
+            {
+                //Arrange
+                //Create a random user to test
+                var existingUser = CreateRandomUser();
+
+                //Set up mock repository that returns an expected expense
+                applicationUserRepositoryStub.Setup(repo => repo.GetApplicationUserAsync(It.IsAny<string>()))
+                    .ReturnsAsync(existingUser);
+
+                var applicationUserId = existingUser.Id;
+                var userToUpdate = new UpdateApplicationUserDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+
+                //Create an instance of the application user controller
+                var controller = new ApplicationUserController(applicationUserRepositoryStub.Object);
+
+                //Act
+                //Get the application user from the database
+                var result = await controller.UpdateApplicationUserAsync(applicationUserId,userToUpdate);
+
+                //Assert
+                result.Should().BeOfType<NoContentResult>();
+            }
+            catch (Exception e)
+            {
+                Assert.False(1 == 1);
+            }
+        }
+
+        [Fact]
+        public async Task UpdateApplicationUserAsync_WithUnexistingApplicationUser_ReturnsNotFound()
+        {
+            try
+            {
+                //Arrange
+                //Create a random user to test
+                var existingUser = CreateRandomUser();
+
+                //Set up mock repository that returns an expected expense
+                applicationUserRepositoryStub.Setup(repo => repo.GetApplicationUserAsync(It.IsAny<string>()))
+                    .ReturnsAsync((ApplicationUser)null);
+
+                var applicationUserId = existingUser.Id;
+                var userToUpdate = new UpdateApplicationUserDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+
+                //Create an instance of the application user controller
+                var controller = new ApplicationUserController(applicationUserRepositoryStub.Object);
+
+                //Act
+                //Get the application user from the database
+                var result = await controller.UpdateApplicationUserAsync(applicationUserId, userToUpdate);
+
+                //Assert
+                result.Should().BeOfType<NotFoundResult>();
+            }
+            catch (Exception e)
+            {
+                Assert.False(1 == 1);
+            }
+        }
+
+        [Fact]
+        public async Task DeleteApplicationUserAsync_WithExistingApplicationUser_ReturnsNoContent()
+        {
+            try
+            {
+                //Arrange
+                //Create a random user to test
+                var existingUser = CreateRandomUser();
+
+                //Set up mock repository that returns an expected expense
+                applicationUserRepositoryStub.Setup(repo => repo.GetApplicationUserAsync(It.IsAny<string>()))
+                    .ReturnsAsync(existingUser);
+
+                //Create an instance of the application user controller
+                var controller = new ApplicationUserController(applicationUserRepositoryStub.Object);
+
+                //Act
+                //Get the application user from the database
+                var result = await controller.DeleteApplicationUserAsync(existingUser.Id);
+
+                //Assert
+                result.Should().BeOfType<NoContentResult>();
+            }
+            catch (Exception e)
+            {
+                Assert.False(1 == 1);
+            }
+        }
+
+        [Fact]
+        public async Task DeleteApplicationUserAsync_WithUnexistingApplicationUser_ReturnsNotFound()
+        {
+            try
+            {
+                //Arrange
+                //Create a random user to test
+                var existingUser = CreateRandomUser();
+
+                //Set up mock repository that returns an expected expense
+                applicationUserRepositoryStub.Setup(repo => repo.GetApplicationUserAsync(It.IsAny<string>()))
+                    .ReturnsAsync((ApplicationUser)null);
+
+                //Create an instance of the application user controller
+                var controller = new ApplicationUserController(applicationUserRepositoryStub.Object);
+
+                //Act
+                //Get the application user from the database
+                var result = await controller.DeleteApplicationUserAsync(existingUser.Id);
+
+                //Assert
+                result.Should().BeOfType<NotFoundResult>();
+            }
+            catch (Exception e)
+            {
+                Assert.False(1 == 1);
+            }
+        }
+
         private ApplicationUser CreateRandomUser()
         {
             var idToPass = Guid.NewGuid().ToString();
