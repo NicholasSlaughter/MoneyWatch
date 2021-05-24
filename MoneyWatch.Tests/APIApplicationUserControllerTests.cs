@@ -75,8 +75,8 @@ namespace MoneyWatch.Tests
                 //Assert
                 applicationUserDtoResult.Should().NotBeNull();
                 applicationUserDtoResult.Should().BeEquivalentTo(
-                    applicationUserDtoResult,
-                    options => options.ComparingByMembers<ApplicationUser>());
+                    expectedUser,
+                    options => options.ComparingByMembers<ApplicationUser>().ExcludingMissingMembers());
             }
             catch (Exception e)
             {
