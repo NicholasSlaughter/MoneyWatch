@@ -15,7 +15,7 @@ using Xunit;
 
 namespace MoneyWatch.Tests
 {
-    public class APIApplicationUserControllerTests
+    public class APIApplicationUserControllerTests : Utilities.CreateRandomData
     {
         private readonly Mock<IApplicationUsersRepository> applicationUserRepositoryStub = new();
         private readonly Random rand = new();
@@ -267,63 +267,5 @@ namespace MoneyWatch.Tests
                 Assert.False(1 == 1);
             }
         }
-
-        private ApplicationUser CreateRandomUser()
-        {
-            var idToPass = Guid.NewGuid().ToString();
-            return new()
-            {
-                Id = idToPass,
-                First_Name = Guid.NewGuid().ToString(),
-                Last_Name = Guid.NewGuid().ToString(),
-                Expenses =
-                {
-                    CreateRandomExpense(idToPass),
-                    CreateRandomExpense(idToPass),
-                    CreateRandomExpense(idToPass)
-                },
-                Alerts =
-                {
-                    CreateRandomAlert(idToPass),
-                    CreateRandomAlert(idToPass),
-                    CreateRandomAlert(idToPass)
-                }
-            };
-        }
-
-        private Expense CreateRandomExpense(string userId)
-        {
-            var category = CreateRandomCategory();
-            return new()
-            {
-                Id = Guid.NewGuid(),
-                ApplicationUserId = userId,
-                Price = rand.Next(1,1000000),
-                Description = Guid.NewGuid().ToString(),
-                DateOfExpense = DateTimeOffset.UtcNow,
-                CategoryId = category.Id.ToString()
-            };
-        }
-
-        private Alert CreateRandomAlert(string userId)
-        {
-            var category = CreateRandomCategory();
-            var period = CreateRandomPeriod();
-            return new()
-            {
-                Id = Guid.NewGuid(),
-                ApplicationUserId = userId,
-                Price = rand.Next(1, 1000000),
-                AlertCreationDate = DateTimeOffset.UtcNow,
-                PeriodStartDate = DateTimeOffset.UtcNow,
-                PriodEndDate = DateTimeOffset.UtcNow.AddDays(rand.Next(1, 7)),
-                PeriodId = period.Id.ToString(),
-                CategoryId = category.Id.ToString()
-            };
-        }
-
-        private Period CreateRandomPeriod() => new() { Id = Guid.NewGuid(), Name = Guid.NewGuid().ToString() };
-
-        private Category CreateRandomCategory() => new() { Id = Guid.NewGuid(), Name = Guid.NewGuid().ToString() };
     }
 }

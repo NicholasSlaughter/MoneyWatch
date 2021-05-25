@@ -15,7 +15,7 @@ using Xunit;
 
 namespace MoneyWatch.Tests
 {
-    public class APIExpensesTests
+    public class APIExpensesTests : Utilities.CreateRandomData
     {
         private readonly Mock<IExpensesRepository> expenseRepositoryStub = new();
         private readonly Random rand = new();
@@ -253,21 +253,5 @@ namespace MoneyWatch.Tests
                 Assert.False(1 == 1);
             }
         }
-
-        private Expense CreateRandomExpense()
-        {
-            var category = CreateRandomCategory();
-            return new()
-            {
-                Id = Guid.NewGuid(),
-                ApplicationUserId = Guid.NewGuid().ToString(),
-                Price = rand.Next(1, 1000000),
-                Description = Guid.NewGuid().ToString(),
-                DateOfExpense = DateTimeOffset.UtcNow,
-                CategoryId = category.Id.ToString()
-            };
-        }
-
-        private Category CreateRandomCategory() => new() { Id = Guid.NewGuid(), Name = Guid.NewGuid().ToString() };
     }
 }
