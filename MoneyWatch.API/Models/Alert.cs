@@ -23,10 +23,13 @@ namespace MoneyWatch.API.Models
         public DateTimeOffset PeriodStartDate { get; set; }
 
         [Required, DisplayFormat(DataFormatString = "{0:MM/dd/yy hh:mm tt}"), Display(Name = "Period End Date")]
-        public DateTimeOffset PriodEndDate { get; set; }
+        public DateTimeOffset PeriodEndDate { get; set; }
 
         [Display(Name ="Period")]
         public string PeriodId { get; set; }
         public Period Period { get; set; }
+        [Display(Name ="Category")]
+        public string CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }
