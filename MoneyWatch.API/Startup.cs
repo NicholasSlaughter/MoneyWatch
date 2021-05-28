@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,7 @@ using MoneyWatch.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MoneyWatch.API
@@ -29,11 +31,49 @@ namespace MoneyWatch.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddTransient<UserManager<ApplicationUser>>();
+            services.AddTransient<SignInManager<ApplicationUser>>();
+            services.AddTransient<ApplicationDbContext>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("UserAndHigherPolicy", p =>
+                {
+                    p.RequireAssertion(context =>
+                    {
+                        return context.User.Claims.Any(c => c.Type == ClaimTypes.Role && c.Value.Equals("User"))
+                            || context.User.Claims.Any(c => c.Type == ClaimTypes.Role && c.Value.Equals("Admin"))
+                            || context.User.Claims.Any(c => c.Type == ClaimTypes.Role && c.Value.Equals("SuperAdmin"));
+                    });
+                });
+                options.AddPolicy("AdminAndHigherPolicy", p =>
+                {
+                    p.RequireAssertion(context =>
+                    {
+                        return context.User.Claims.Any(c => c.Type == ClaimTypes.Role && c.Value.Equals("Admin"))
+                            || context.User.Claims.Any(c => c.Type == ClaimTypes.Role && c.Value.Equals("SuperAdmin"));
+                    });
+                });
+                options.AddPolicy("SuperAdminPolicy", p =>
+                {
+                    p.RequireAssertion(context =>
+                    {
+                        return context.User.Claims.Any(c => c.Type == ClaimTypes.Role && c.Value.Equals("SuperAdmin"));
+                    });
+                });
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -55,6 +95,8 @@ namespace MoneyWatch.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCookiePolicy();
 
             app.UseAuthorization();
 

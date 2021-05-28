@@ -56,7 +56,12 @@ namespace MoneyWatch.API.Controllers
                 Expenses = null,
                 Alerts = null
             };
-            await _applicationUsersRepository.CreateApplicationUserAsync(newUser, userPassword);
+
+            var result = await _applicationUsersRepository.CreateApplicationUserAsync(newUser, userPassword);
+
+            if (!result.Succeeded)
+                BadRequest(); //TODO: Change to different post request
+
             return CreatedAtAction(nameof(CreateApplicationUserAsync), new { id = newUser.Id }, newUser.AsDto());
         }
 
@@ -73,7 +78,8 @@ namespace MoneyWatch.API.Controllers
             updatedUser.Last_Name = userDto.Last_Name;
             updatedUser.Email = userDto.Email;
             updatedUser.UserName = userDto.UserName;
-
+            
+            //TODO: make IUserClaim. Have GetUserClaimAsync method. Have ApplicationUserRepositoryInherit
             await _applicationUsersRepository.UpdateApplicationUserAsync(updatedUser);
 
             return NoContent();

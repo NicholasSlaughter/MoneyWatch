@@ -160,7 +160,7 @@ namespace MoneyWatch.Tests
                     .ReturnsAsync(existingUser);
 
                 var applicationUserId = existingUser.Id;
-                var userToUpdate = new UpdateApplicationUserDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+                var userToUpdate = new UpdateApplicationUserDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(),"Admin");
 
                 //Create an instance of the application user controller
                 var controller = new ApplicationUserController(applicationUserRepositoryStub.Object);
@@ -192,7 +192,7 @@ namespace MoneyWatch.Tests
                     .ReturnsAsync((ApplicationUser)null);
 
                 var applicationUserId = existingUser.Id;
-                var userToUpdate = new UpdateApplicationUserDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+                var userToUpdate = new UpdateApplicationUserDto(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), "SuperAdmin");
 
                 //Create an instance of the application user controller
                 var controller = new ApplicationUserController(applicationUserRepositoryStub.Object);

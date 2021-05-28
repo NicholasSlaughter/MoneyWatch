@@ -17,6 +17,8 @@ namespace MoneyWatch.API.Dtos
         string UserName,
         [Required, Display(Name = "Email"), MaxLength(255),EmailAddress]
         string Email,
+        [Required, Display(Name = "Policy")]
+        string Policy,
         ICollection<Expense> Expenses,
         ICollection<Alert> Alerts);
 
@@ -38,5 +40,7 @@ namespace MoneyWatch.API.Dtos
         [Required, Display(Name = "User Name"), MaxLength(255)]
         string UserName,
         [Required, Display(Name = "Email"), MaxLength(255),EmailAddress]
-        string Email);
+        string Email,
+        [Required, Display(Name = "Policy")]
+        string Policy);
 }
